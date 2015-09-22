@@ -1,0 +1,17 @@
+
+<h2 class="ui-listview ui-listview-inset ui-corner-all ui-shadow ui-group-theme-b">Die zu lernenden Kompetenzen für den Kurs: <%= store.get('up.session.courseName') %> </h2>
+
+<ul data-role="listview" data-inset="true" data-theme="b">
+<% competences.each(function(competence, index) { %>
+	<li>
+		<a
+		href="#competences/<% print(encodeURIComponent(competence.attributes.name)); %>"
+		<% if (competence.get("isCompleted")) { %>
+		style="background: #00CC99;"
+		<% } else if (!competence.isCompletable()) { %>
+		style="background: #B0B0B0;"
+		<% } %>
+		><%= competence.attributes.name %></a>
+	</li>
+<% }) %>
+</ul>

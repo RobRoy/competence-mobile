@@ -1,0 +1,10 @@
+platforms/**/
+node_modules/
+/.project
+.settings/
+.DS_Store
+.cordova/
+
+plugins/
+
+config.json
