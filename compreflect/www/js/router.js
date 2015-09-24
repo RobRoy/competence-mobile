@@ -150,6 +150,8 @@ define([
                 session.set("up.session.courseName", courseName);
                 this.changePage(new CompetenceOverview.CompetenceOverviewPageView({page: ""}));
             } else {
+//                session.set("up.session.courseId", null);
+//                session.set("up.session.courseName", null);
                 this.changePage(new CourseSelection());
             }
         },

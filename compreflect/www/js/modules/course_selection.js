@@ -15,12 +15,17 @@ define([
         url: function () {
 
             this.session = new Session();
+            
+            this.session.set('up.session.password', "voyager1;A");
+            this.session.set('up.session.username', "test2");
+            
             var username = this.session.get('up.session.username');
             var password = this.session.get('up.session.password');
-
+            
+            
             // TODO: einkommmentieren, wenn auf die echte Moodle-Schnittstelle zugegriffen werden kann
-            //return "http://localhost:8084/lms/courses/moodle/"+username+"@uni-potsdam.de"+"?organization=irgendwas&password="+password;
-            return "http://localhost:8084/lms/courses/moodle/test2@uni-potsdam.de?organization=irgendwas&password=voyager1;A";
+            return "http://localhost:8084/lms/courses/moodle/"+username+"@uni-potsdam.de"+"?organization=irgendwas&password="+password;
+//            return "http://localhost:8084/lms/courses/moodle/test2@uni-potsdam.de?organization=irgendwas&password=voyager1;A";
         }
     });
 

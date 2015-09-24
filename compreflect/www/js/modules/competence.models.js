@@ -68,7 +68,7 @@ define([
 			var responseSuccess = function(response) {
 				var evidences = response.mapUserCompetenceLinks[competenceName];
 				var ev = _.find(evidences, function(ev) {
-					return ev.evidenceTitel === evidence.link && ev.evidenceUrl === evidence.name;
+					return ev.evidenceTitel === evidence.name && ev.evidenceUrl === evidence.link;
 				});
 
 				if (ev) success(ev.abstractLinkId);
