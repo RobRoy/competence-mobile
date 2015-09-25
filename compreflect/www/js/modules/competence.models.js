@@ -13,7 +13,7 @@ define([
 
 
 	var serverUrl = "http://fleckenroller.cs.uni-potsdam.de/app/competence-servlet/competence/competences";
-	var useLocalServer = true;
+	var useLocalServer = false;
 
 	if (!window.cordova && useLocalServer) {
 		serverUrl = "http://localhost:8084/competences";
