@@ -16,8 +16,9 @@ define([
 
             this.session = new Session();
 
+			// TODO löschen, wenn offizielles Moodle angebunden ist
             this.session.set('up.session.password', "voyager1;A");
-            this.session.set('up.session.username', "test2");
+            this.session.set('up.session.username', "test");
 
             var username = this.session.get('up.session.username');
             var password = this.session.get('up.session.password');
