@@ -15,23 +15,30 @@ define([
         url: function () {
 
             this.session = new Session();
-            
+
             this.session.set('up.session.password', "voyager1;A");
             this.session.set('up.session.username', "test2");
-            
+
             var username = this.session.get('up.session.username');
             var password = this.session.get('up.session.password');
-            
-            
-            // TODO: einkommmentieren, wenn auf die echte Moodle-Schnittstelle zugegriffen werden kann
-            return "http://localhost:8084/lms/courses/moodle/"+username+"@uni-potsdam.de"+"?organization=irgendwas&password="+password;
-//            return "http://localhost:8084/lms/courses/moodle/test2@uni-potsdam.de?organization=irgendwas&password=voyager1;A";
+
+
+            var serverUrl = "http://fleckenroller.cs.uni-potsdam.de/app/competence-servlet/competence";
+            var useLocalServer = false;
+
+            if (!window.cordova && useLocalServer) {
+                serverUrl = "http://localhost:8084";
+            }
+
+            // TODO: ändern, wenn auf die echte Moodle-Schnittstelle zugegriffen werden kann
+            return serverUrl+"/lms/courses/moodle/" + username + "@uni-potsdam.de" + "?organization=irgendwas&password=" + password;
+
         }
     });
 
     var CourseListView = Backbone.View.extend({
-        initialize: function() {            
-            this.template = utils.rendertmpl("course_selection.courses");                 
+        initialize: function () {
+            this.template = utils.rendertmpl("course_selection.courses");
             this.listenTo(this.collection, "sync error", this.render);
             this.collection.fetch();
         },
@@ -45,9 +52,8 @@ define([
     var CourseSelectionPageView = Backbone.View.extend({
         attributes: {"id": "courseSelection"},
         initialize: function () {
-            this.template = utils.rendertmpl("course_selection");                        
+            this.template = utils.rendertmpl("course_selection");
         },
-       
         render: function () {
             this.$el.html(this.template({}));
             this.$el.trigger("create");
