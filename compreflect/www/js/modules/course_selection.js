@@ -18,7 +18,7 @@ define([
 
 			// TODO löschen, wenn offizielles Moodle angebunden ist
             this.session.set('up.session.password', "voyager1;A");
-            this.session.set('up.session.username', "test");
+            this.session.set('up.session.username', "test3");
 
             var username = this.session.get('up.session.username');
             var password = this.session.get('up.session.password');
@@ -32,8 +32,8 @@ define([
             }
 
             // TODO: einkommmentieren, wenn auf die echte Moodle-Schnittstelle zugegriffen werden kann
-            // return serverUrl+"/lms/courses/moodle/" + username + "@uni-potsdam.de" + "?organization=irgendwas&password=" + password;
-            return serverUrl+"/lms/courses/moodle/test@uni-potsdam.de?organization=irgendwas&password=voyager1;A";
+            return serverUrl+"/lms/courses/moodle/" + username + "@uni-potsdam.de" + "?organization=irgendwas&password=" + password;
+            //return serverUrl+"/lms/courses/moodle/test3@uni-potsdam.de?organization=irgendwas&password=voyager1;A";
         }
     });
 
