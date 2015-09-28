@@ -24,15 +24,15 @@ define([
 
 
             var serverUrl = "http://fleckenroller.cs.uni-potsdam.de/app/competence-servlet/competence";
-            var useLocalServer = false;
+            var useLocalServer = true;
 
             if (!window.cordova && useLocalServer) {
                 serverUrl = "http://localhost:8084";
             }
 
-            // TODO: ändern, wenn auf die echte Moodle-Schnittstelle zugegriffen werden kann
-            return serverUrl+"/lms/courses/moodle/" + username + "@uni-potsdam.de" + "?organization=irgendwas&password=" + password;
-
+            // TODO: einkommmentieren, wenn auf die echte Moodle-Schnittstelle zugegriffen werden kann
+            // return serverUrl+"/lms/courses/moodle/" + username + "@uni-potsdam.de" + "?organization=irgendwas&password=" + password;
+            return serverUrl+"/lms/courses/moodle/test@uni-potsdam.de?organization=irgendwas&password=voyager1;A";
         }
     });
 
