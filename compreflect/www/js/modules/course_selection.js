@@ -14,11 +14,7 @@ define([
     var SelectableCourses = Backbone.Collection.extend({
         url: function () {
 
-            this.session = new Session();
-
-			// TODO löschen, wenn offizielles Moodle angebunden ist
-            this.session.set('up.session.password', "voyager1;A");
-            this.session.set('up.session.username', "test3");
+            this.session = new Session();		
 
             var username = this.session.get('up.session.username');
             var password = this.session.get('up.session.password');
@@ -30,10 +26,9 @@ define([
             if (!window.cordova && useLocalServer) {
                 serverUrl = "http://localhost:8084";
             }
-
-            // TODO: einkommmentieren, wenn auf die echte Moodle-Schnittstelle zugegriffen werden kann
+            
             return serverUrl+"/lms/courses/moodle/" + username + "@uni-potsdam.de" + "?organization=irgendwas&password=" + password;
-            //return serverUrl+"/lms/courses/moodle/test3@uni-potsdam.de?organization=irgendwas&password=voyager1;A";
+            
         }
     });
 
