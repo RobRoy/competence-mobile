@@ -54,7 +54,7 @@ define([
 
 			var comment = this.$("#comment").val();
 			var model = this.collection.find(function(competence) { return competence.get("name") === this.page}, this);
-			if (commment == undefined || comment == "") {
+			if (comment == undefined || comment == "") {
 				comment = "Ohne Kommentar"
 			}
 			model.set("comment", comment);
