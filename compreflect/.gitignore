@@ -1,4 +1,5 @@
 platforms/**/
+platforms/*
 node_modules/
 /.project
 .settings/
