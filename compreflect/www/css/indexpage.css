@@ -94,21 +94,24 @@
  	background-color: #d0dae3;
  	margin: 4px;
  	float: left;
-}
-
-#home .flex-item a {
 	width: 85px;
  	height: 85px;
  	padding: 5px;
+}
+
+#home .flex-item a {
+	width: 100%;
  	background-color: #d0dae3;
 	background-color: transparent;
 	text-transform: none;
 	color: #014260;
 	font-size: .9em;
-	text-align: right;
+	text-align: center;
 	text-transform: none;
 	word-wrap: normal;
 	border: none;
+  padding: 0;
+  padding-top:25%;
 }
 
 #home h2 {

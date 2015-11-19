@@ -1,11 +1,11 @@
 <!-- Start Header -->
 <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="a">
+  <h1 class="loggedin">Mobile.UP </h1>
    <%  if(store.get('up.session.authenticated')){ %>
-	<h1 class="loggedin">Mobile.UP </h1>
-	<a href="#options" class="settings ui-btn" data-role="button" data-icon="false" title="logout" alt="logout">Logout</a>
-    <%  } else { %>
-    <h1>Mobile.UP</h1>
-    <% } %>
+    <a href="#options" class="settings ui-btn" data-role="button" data-icon="false" title="logout" alt="logout">Logout</a>
+   <%  } else { %>
+    <a href="#options" class="settings ui-btn" data-role="button" data-icon="false" title="login" alt="login">Login</a>
+   <% } %>
 </div>
 <!-- End Header -->
 
@@ -16,11 +16,28 @@
 		<!-- Mein Studium -->
 		<h2>Meine Kompetenzen</h2>
 		<div>
-			<div class= "flex-item iconized competences">
+			<div class="flex-item iconized competences">
 				<a href="#courseSelection" data-role="button">Kompetenz-<br>übersicht</a>
 			</div>
 		</div>
 	</div>
+  <div style="clear:both; margin-bottom: 20px;"></div>
+	<div class="flex-container">
+		<!-- Mein Studium -->
+		<h2>Informationen</h2>
+		<div>
+			<div class="flex-item iconized competences">
+				<a href="#lectures" data-role="button">Vorlesungs-<br>verzeichnis</a>
+			</div>
+			<div class="flex-item iconized competences">
+				<a href="#news" data-role="button" style="padding-top:35%;">Neuigkeiten</a>
+			</div>
+			<div class="flex-item iconized competences">
+				<a href="#sitemap" data-role="button" style="padding-top:35%;">Lagepläne</a>
+			</div>
+		</div>
+	</div>
+  
 
 </div> <!-- ende content -->
 <!-- End Main - Navigation -->
