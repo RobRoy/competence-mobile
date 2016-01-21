@@ -51,7 +51,7 @@ define([
 		},
 
 		_competenceCompletionUrl: function() {
-			var url = new URI(serverUrl + "/json/link/create");
+			var url = new URI(serverUrl + "/link/create");
 			url.segment(this.get("context").get("course"))
 				.segment(this.get("context").get("username"))
 				.segment("student")
@@ -76,7 +76,7 @@ define([
 			};
 
 			$.ajax({
-				url: new URI(serverUrl + "/json/link/overview").segment(this.get("context").get("username")).toString(),
+				url: new URI(serverUrl + "/link/overview").segment(this.get("context").get("username")).toString(),
 				type: "GET",
 				success: responseSuccess,
 				error: error
@@ -84,7 +84,7 @@ define([
 		},
 
 		_commentSubmitUrl: function(abstractLinkId) {
-			var url = new URI(serverUrl + "/json/link/comment");
+			var url = new URI(serverUrl + "/link/comment");
 			url.segment(abstractLinkId);
 			url.segment(this.get("context").get("username"))
 			url.segment(this.get("context").get("course"))
@@ -141,13 +141,13 @@ define([
 		model: Competence,
 
 		_triplesUrl: function() {
-			var url = new URI(serverUrl + "/json/prerequisite/graph");
+			var url = new URI(serverUrl + "/prerequisite/graph");
 			url.segment(this.context.get("course"))
 			return url.toString();
 		},
 
 		_competencesUrl: function() {
-			var url = new URI(serverUrl + "/xml/competencetree/coursecontext/");
+			var url = new URI(serverUrl + "/competencetree/coursecontext/");
 			url.segment(this.context.get("course"))
 				.segment("all")
 				.segment("nocache");
@@ -155,7 +155,7 @@ define([
 		},
 
 		_achievementsUrl: function() {
-			var url = new URI(serverUrl + "/json/link/overview");
+			var url = new URI(serverUrl + "/link/overview");
 			url.segment(this.context.get("username"));
 			return url.toString();
 		},
