@@ -1,0 +1,24 @@
+{
+	"title": "login",
+	"$schema": "http://json-schema.org/draft-04/schema#",
+
+	"type": "object",
+
+	"properties": {
+		"success": {
+			"type": "boolean"
+		},
+		"email": {
+			"type": "string",
+      "format": "email"
+		},
+		"name": {
+			"type": "string",
+      "ipsum": "name"
+		},
+		"token": {
+			"type": "string",
+      "ipsum": "id"
+		}
+	}
+}
