@@ -1,0 +1,31 @@
+{
+	"title": "courselist",
+	"$schema": "http://json-schema.org/draft-04/schema#",
+
+	"type": "object",
+  "description": "the course list of a given user",
+
+	"properties": {
+		"courses": {
+      "description": "the course list",
+			"type": "array",
+      "items": {
+        "description": "object representing a single course",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "the course id",
+            "type": "integer"
+          },
+          "title": {
+            "description": "the title of the course",
+            "type": "string",
+            "ipsum": "title"
+          }
+        }
+      },
+      "minItems": 0,
+      "uniqueItems": true
+		}
+  }
+}
