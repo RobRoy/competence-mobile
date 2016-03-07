@@ -48,7 +48,10 @@ else {
 switch ($route) {
   case 'lms/user/exists':
     echo json_encode(getFakeData("login.json"));
-    break;  
+    break;
+  case 'lms/courses/moodle':
+    echo json_encode(getFakeData("courselist.json"));
+    break;
   default:
     echo json_encode(getFakeData("nothing.json"));
     break;

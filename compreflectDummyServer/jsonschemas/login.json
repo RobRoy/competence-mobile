@@ -3,20 +3,25 @@
 	"$schema": "http://json-schema.org/draft-04/schema#",
 
 	"type": "object",
+  "description": "a user object after login",
 
 	"properties": {
 		"success": {
+      "description": "boolean value determining the auth success - if this is false, ignore everything else",
 			"type": "boolean"
 		},
 		"email": {
+      "description": "the user's email - could be rechecked in the app",
 			"type": "string",
       "format": "email"
 		},
 		"name": {
+      "description": "the user's name",
 			"type": "string",
       "ipsum": "name"
 		},
 		"token": {
+      "description": "the Moodle API token for further requests against the Moodle API",
 			"type": "string",
       "ipsum": "id"
 		}
