@@ -13,31 +13,32 @@
 <div data-role="content">
 
 	<div class="flex-container">
+    <%  if(store.get('up.session.authenticated')){ %>
+     <p style="margin-bottom:2%;">
+       Hallo <%= store.get('up.session.name') %>,
+     </p>
+    <% } %>
+    <p style="margin-bottom:2%;">
+      Mit den folgenden Funktionen kannst Du Deine
+      erworbenen Kompetenzen überblicken und reflektieren.
+    </p>
+    <p style="margin-bottom:2%;">
+      Bitte nutze die folgenden Einstiegspunkte, um Deine
+      Kompetenzen einzusehen.
+    </p>
 		<!-- Mein Studium -->
-		<h2>Meine Kompetenzen</h2>
+		<h2>Kompetenzen verwalten</h2>
 		<div>
 			<div class="flex-item iconized competences">
-				<a href="#courseSelection" data-role="button">Kompetenz-<br>übersicht</a>
+				<a href="#courseSelection" data-role="button">Nach <br> Kursen</a>
+			</div>
+			<div class="flex-item iconized competences">
+				<a href="#myCompetences" data-role="button">Nach <br> Ergebnissen</a>
+			</div>
+			<div class="flex-item iconized competences">
+				<a href="#myCompetencePaths" data-role="button">Nach <br> Vorschlägen</a>
 			</div>
 		</div>
 	</div>
-  <div style="clear:both; margin-bottom: 20px;"></div>
-	<div class="flex-container">
-		<!-- Mein Studium -->
-		<h2>Informationen</h2>
-		<div>
-			<div class="flex-item iconized competences">
-				<a href="#lectures" data-role="button">Vorlesungs-<br>verzeichnis</a>
-			</div>
-			<div class="flex-item iconized competences">
-				<a href="#news" data-role="button" style="padding-top:35%;">Neuigkeiten</a>
-			</div>
-			<div class="flex-item iconized competences">
-				<a href="#sitemap" data-role="button" style="padding-top:35%;">Lagepläne</a>
-			</div>
-		</div>
-	</div>
-  
-
 </div> <!-- ende content -->
 <!-- End Main - Navigation -->

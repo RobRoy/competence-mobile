@@ -1,0 +1,51 @@
+<!-- Start Header -->
+<div data-role="header" data-position="fixed" data-tap-toggle="false">
+  <a href="javascript:history.back()" class="ui-btn ui-btn-inline ui-link ui-shadow ui-corner-all back" data-transition="slidefade" data-direction="reverse" data-rel="back">Zurück</a>
+	
+	
+	<%  if(store.get('up.session.authenticated')){ %>
+	<h1 class="loggedin">Kompetenz</h1>
+	<a href="#options" class="settings ui-btn" data-role="button" data-icon="false" title="logout" alt="logout">Logout</a>
+    <%  } else { %> 
+    <h1>Kompetenz</h1>   
+    <% } %> 
+    
+</div>
+<!-- End Header -->
+
+<div id="competence" data-role="content" data-theme="c">
+	<div class="flex-container">
+    <h2 id="competenceTitle"><%= store.get('up.session.competenceName') %> (Fortschritt)</h2>
+    <div class="percentageMeter" style="max-width:50%; margin-left:auto;margin-right:auto;"> ​
+      <div id="compcircle"></div>​
+    ​</div>​
+    <p style="margin-bottom:2%;padding:10px;">
+      <%= competence.attributes.description %>
+    </p>
+    <h2>Zugehörige Kompetenzen</h2>
+    <div id="competenceTree"></div>
+	</div>
+</div>
+
+
+<div data-role="panel" style="background-color:#ededed;" data-position="right" data-display="overlay" id="add-competence" data-theme="b" data-dismissible="false">
+  <form method="POST" id="competence-form">
+  	<fieldset data-role="controlgroup">
+  		<h3 class="blau"><%= store.get('up.session.competenceName') %></h3>
+      <span style="font-size: 12px; font-weight:bold;">Evidenzkommentar</span>
+  		<input type="text" name="competencecomment" id="competencecomment">
+      <span style="font-size: 12px; font-weight:bold;">Tags (kommagetrennt)</span>
+  		<input type="text" name="comptencetags" id="competencetags">
+  	</fieldset>
+    <input type="submit" value="Speichern" data-theme="a" data-icon="save" data-iconpos="right"/>
+  	<a data-role="button" data-theme="a" data-rel="close" class="options-close">Schlie&szlig;en</a>
+  </form>
+</div>
+
+<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="footer">
+	<div data-role="navbar" data-tap-toggle="true" data-theme="a">
+		<ul>
+			<li><a data-role="button" class="btn-add-competence" href="#add-competence" role="button" title="add-competence" alt="class="btn-add-competence"">Kompetenz erwerben</a></li>
+		</ul>
+	</div>
+</div>

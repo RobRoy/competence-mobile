@@ -27,7 +27,11 @@ define([
 	});
 
     var Session = Backbone.Model.extend({
-
+				
+				
+				devServer: true,
+        localHandling: true, // switch this to enable legacy mode (old code) or when the backend is production ready
+			// TODO: this should point to an installation of the competence-database later on; not a moodle endpoint
         suburl: 'https://api.uni-potsdam.de/endpoints/moodleAPI/login/token.php',
 
         initialize: function(){
@@ -69,11 +73,19 @@ define([
         },
 
         generateLoginURL: function(credentials){
-            this.url = this.suburl;
-            // prepare Moodle Token URL
-            this.url +='?username='+encodeURIComponent(credentials.username);
-            this.url +='&password='+encodeURIComponent(credentials.password);
-            this.url +='&service=moodle_mobile_app&moodlewsrestformat=json';
+					this.url = this.suburl;
+					if (this.devServer) {
+            if (this.localHandling) {
+              this.url = "http://competenceserver.dev/lms/user/exists";
+            }
+            else {
+              this.url = 'http://localhost:8084/lms/user/exists';              
+            }
+					}
+          // prepare Moodle Token URL
+          this.url +='?user='+encodeURIComponent(credentials.username);
+          this.url +='&password='+encodeURIComponent(credentials.password);
+          this.url +='&lmsSystem=moodle';
         },
         
         clearPrivateCache: function() {

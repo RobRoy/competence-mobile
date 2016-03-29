@@ -124,6 +124,24 @@
 	margin: 4px;
 }
 
+#competence .flex-container {
+  max-width: 515px; /* Maximum of five horizontal items */
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 8px;
+}
+
+#competence h2 {
+	font-family: georgia, serif;
+	font-style: italic;
+	color: #fff;
+	letter-spacing: 1px;
+	background-color: #014260;
+	padding: 8px;
+	margin: 4px;
+}
+
+
 /* Adapt header width to horizontal item count */
 /* Each item has a width of 95 and a margin of 8 */
 @media all and (min-width: 103px) {

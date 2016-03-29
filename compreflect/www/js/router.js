@@ -29,8 +29,9 @@ define([
     'modules/people',
     'modules/calendar.export',
     'modules/competence.overview',
-    'modules/course_selection'    
-], function ($, _, Backbone, BaseRouter, Session, utils, customHistory, HomePageView, NewsView, EventsView, CalendarPageView, MoodlePageView, EmergencyPageView, SitemapPageView, RoomPageView, OpeningPageView, TransportPageView, Transport2PageView, MensaPageView, LibraryPageView, LecturesPageView, GradesPageView, ImpressumPageView, OptionsPageView, PeoplePageView, CalendarExportPageView, CompetenceOverview, CourseSelection) {
+    'modules/competence.view',
+    'modules/course_selection',
+], function ($, _, Backbone, BaseRouter, Session, utils, customHistory, HomePageView, NewsView, EventsView, CalendarPageView, MoodlePageView, EmergencyPageView, SitemapPageView, RoomPageView, OpeningPageView, TransportPageView, Transport2PageView, MensaPageView, LibraryPageView, LecturesPageView, GradesPageView, ImpressumPageView, OptionsPageView, PeoplePageView, CalendarExportPageView, CompetenceOverview, CompetenceView, CourseSelection) {
 
     var AppRouter = BaseRouter.extend({
         routes: {
@@ -62,13 +63,15 @@ define([
             "options": "options",
             "people": "people",
             "competences": "competences",
-            "competences/:competenceName": "competences",
+            "competences/:competenceName/:competenceId": "competences",
             "courseSelection": "courseSelection",
-            "courseSelection/:courseName/:courseId": "courseSelection"
+            "courseSelection/:courseName/:courseId": "courseSelection",
+            "myCompetences": "myCompetences",
+            "myCompetencePaths": "myCompetencePaths"
         },
         routesToScrollPositions: {},
         // routes that need authentication
-        requiresAuth: ['competences', 'calendar', 'moodle', 'grades', 'people', 'courseSelection'],
+        requiresAuth: ['competences', 'calendar', 'moodle', 'grades', 'people', 'courseSelection', 'myCompetences', 'myCompetencePaths'],
         // routes to prevent authentication when already authenticated
         preventAccessWhenAuth: [],
         initialize: function () {
@@ -140,21 +143,28 @@ define([
         currentPage: function () {
             return customHistory.currentRoute();
         },
-        competences: function (competenceName) {
-            this.changePage(new CompetenceOverview.CompetenceOverviewPageView({page: competenceName}));
-        },
+        competences: function (competenceName, competenceId) {
+            var session = new Session();
+            session.set("up.session.competenceId", competenceId);
+            session.set("up.session.competenceName", competenceName);
+            this.changePage(new CompetenceView({competence: competenceName}));
+        },        
         courseSelection: function (courseName, courseId) {            
             if (!(courseName === null)) {       
                 var session = new Session();
                 session.set("up.session.courseId", courseId);
                 session.set("up.session.courseName", courseName);
-                this.changePage(new CompetenceOverview.CompetenceOverviewPageView({page: ""}));
+                this.changePage(new CompetenceOverview({page: "coursecompetences"}));
             } else {
-//                session.set("up.session.courseId", null);
-//                session.set("up.session.courseName", null);
                 this.changePage(new CourseSelection());
             }
         },
+        myCompetences: function () {
+          this.changePage(new CompetenceOverview({page: "mycompetences"}));
+        },                
+        myCompetencePaths: function () {
+          this.changePage(new CompetenceOverview({page: "mycompetencepaths"}));
+        },                
         news: function (id) {
             var page = new NewsView.NewsPage;
             this.changePage(page);

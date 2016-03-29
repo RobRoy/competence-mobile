@@ -2144,10 +2144,15 @@ p.event-description {
 	color:#014260 !important;
 }
 
-.btn-filter-events  {
+.btn-filter-events {
 	background-color:#014260 !important;
 	color:#fff !important;
-	}
+}
+
+.btn-add-competence {
+	background-color:#014260 !important;
+	color:#fff !important;
+}
 
 /*** images high resoluton devices ***/
 @media only screen and (-webkit-min-device-pixel-ratio: 2) , only screen and (

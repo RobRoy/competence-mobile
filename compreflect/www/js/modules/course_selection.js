@@ -20,15 +20,25 @@ define([
             var password = this.session.get('up.session.password');
 
 
-            var serverUrl = "http://fleckenroller.cs.uni-potsdam.de/app/competence-servlet/competence";
-            var useLocalServer = false;
+            var serverUrl = "http://localhost:8084";
+            var useLocalServer = true;
+            var localHandling = true; // switch this to enable legacy mode (old code) or when the backend is production ready
 
             if (!window.cordova && useLocalServer) {
+              if (localHandling) {
+                serverUrl = "http://competenceserver.dev";
+              }
+              else {
                 serverUrl = "http://localhost:8084";
+              }
             }
             
-            return serverUrl+"/lms/courses/moodle/" + username + "@uni-potsdam.de" + "?organization=irgendwas&password=" + password;
+            return serverUrl+"/lms/courses/moodle?organization=irgendwas&username="+ username +"@uni-potsdam.de&password=" + password;
             
+        },
+        parse: function(data) {
+          var parsedData = JSON.parse(data);
+          return parsedData.courses;
         }
     });
 

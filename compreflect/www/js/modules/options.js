@@ -68,50 +68,117 @@ define([
 				var username = $('#username').val();
 				var password = $('#password').val();
 				
-				// Remove mail suffix, only username is needed
-				suffixIndex = username.indexOf("@");
-				if (suffixIndex != -1) {
-					username = username.substr(0, suffixIndex);
-					$('#username').val(username);
-				}
 				
-				// Usernames have to be all lower case, otherwise some service logins will fail
-				username = username.toLowerCase()
-				$('#username').val(username);
+				var localHandling = true; // switch this to enable legacy mode (old code) or when the backend is production ready
 				
-				this.model.generateLoginURL({username: username, password: password});
+				if (localHandling) {
+					
+					// new code - local handling
+			
+					/*
+					* The call via the comptence REST server just returns true/false for authentification
+					* which is sufficient but needs different handling.
+					*/
+					
+					this.model.generateLoginURL({username: username, password: password});
+					
+					var that = this;
+					this.model.fetch({
+						success: function(model, response, options){
+							var responseBody = JSON.parse(response);
+              console.log(responseBody);
+							if(responseBody['success'] == false){
+								console.log("Not authenticated.");
+								that.trigger("errorHandler");
+							}
+							else if (responseBody['success'] == true) {
+								that.model.set('up.session.authenticated', true);
+								that.model.set('up.session.username', username);
+								that.model.set('up.session.password', password);
+                that.model.set('up.session.MoodleToken', responseBody['token']);
+                that.model.set('up.session.name', responseBody['name']);
+								that.model.unset('up.session.loginFailureTime');
 
-				var that = this;
-				this.model.fetch({
-					success: function(model, response, options){
+								var path = '';
+								if(that.model.get('up.session.redirectFrom')){
+	            		path = that.model.get('up.session.redirectFrom');
+	            		that.model.unset('up.session.redirectFrom');
+								}
+								Backbone.history.navigate(path, { trigger : true, replace: true });
+							}
+							else {
+								console.log("Unknown response.");
+								that.trigger("errorHandler");
+							}
 
-						// Response contains error, so go to errorHandler
-						if(response['error']){
-							console.log(response['error']);
-							that.trigger("errorHandler");
-						}else{
-							// Everything fine, save Moodle Token and redirect to previous form
-							that.model.set('up.session.authenticated', true);
-							that.model.set('up.session.username', username);
-            				that.model.set('up.session.password', password);
-							that.model.set('up.session.MoodleToken', response['token']);
-							that.model.unset('up.session.loginFailureTime');	//wenn login erfolgreich lösche failureTime
-
-							var path = '';
-							if(that.model.get('up.session.redirectFrom')){
-		                		path = that.model.get('up.session.redirectFrom');
-		                		that.model.unset('up.session.redirectFrom');
-		            		}
-							Backbone.history.navigate(path, { trigger : true, replace: true });
+						},
+						error: function(model, response, options){
+							console.log("Connection error: " + response);
+							that.trigger("missingConnection");
 						}
-
-					},
-					error: function(model, response, options){
-						console.log(response);
-						// render error view
-						that.trigger("missingConnection");
+					});
+				
+				
+					
+				}
+				else {
+					// legacy code - might be used later for productivity
+					
+					/*
+					* The assumptions for this code might not hold in future versions.
+					* Here be dragons.
+					*/
+					
+				
+					// Remove mail suffix, only username is needed
+					suffixIndex = username.indexOf("@");
+					if (suffixIndex != -1) {
+						username = username.substr(0, suffixIndex);
+						$('#username').val(username);
 					}
-				});
+				
+					// Usernames have to be all lower case, otherwise some service logins will fail
+					username = username.toLowerCase()
+					$('#username').val(username);
+				
+					this.model.generateLoginURL({username: username, password: password});
+
+					var that = this;
+					this.model.fetch({
+						success: function(model, response, options){
+							console.log("loginfoo");
+							console.log(response); // true / false
+							// Response contains error, so go to errorHandler
+							if(response['error']){
+								console.log(response['error']);
+								that.trigger("errorHandler");
+							}else{
+								// Everything fine, save Moodle Token and redirect to previous form
+								that.model.set('up.session.authenticated', true);
+								that.model.set('up.session.username', username);
+	            				that.model.set('up.session.password', password);
+								that.model.set('up.session.MoodleToken', response['token']);
+								that.model.unset('up.session.loginFailureTime');	//wenn login erfolgreich lösche failureTime
+
+								var path = '';
+								if(that.model.get('up.session.redirectFrom')){
+			                		path = that.model.get('up.session.redirectFrom');
+			                		that.model.unset('up.session.redirectFrom');
+			            		}
+								Backbone.history.navigate(path, { trigger : true, replace: true });
+							}
+
+						},
+						error: function(model, response, options){
+							console.log("bar");
+							console.log(response);
+							// render error view
+							that.trigger("missingConnection");
+						}
+					});
+					
+					
+				}
 			}else{
 				this.render();
 			}

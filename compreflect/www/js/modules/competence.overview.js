@@ -8,123 +8,115 @@ define([
 	'underscore.string',
 	'modules/competence.models',
 	'cache',
-	'hammerjs'
-], function($, _, Backbone, utils, moment, Session, _str, Models){
+	'hammerjs',
+  'circliful'
+], function($, _, Backbone, utils, moment, Session, _str, Models, Circliful){
+  
+  var SelectableCompetences = Backbone.Collection.extend({
+      url: function () {
 
-	var CompetenceListView = Backbone.View.extend({
+          this.session = new Session();		
+          var compcontext = this.session.get('up.session.compcontext');
+          
+          var serverUrl = "http://localhost:8084";  // this needs to be a URL to a production server once done
+          
+          // Debug & Dev Switches
+          var useLocalServer = true;
+          var localHandling = true; // switch this to enable legacy mode (old code) or when the backend is production ready
 
-		initialize: function(options) {
-			this.template = utils.rendertmpl("competence.list");
+          if (!window.cordova && useLocalServer) {
+            if (localHandling) {
+              serverUrl = "http://competenceserver.dev";
+            }
+            else {
+              serverUrl = "http://localhost:8084";
+            }
+          }
+          console.log(compcontext);
+          switch (compcontext) {
+            case "coursecompetences":
+              if (localHandling) {
+                serverUrl = serverUrl+"/competences/coursecontext?course="+this.session.get('up.session.courseId');
+              }
+              else {
+                var url = new URI(serverUrl + "/competences/coursecontext/selected/{course}");
+                url.segment(this.session.get('up.session.courseId'))
+        				  .segment("all")
+                  .segment("nocache");
+              }
+              break;
+            case "mycompetences":
+              if (localHandling) {
+                serverUrl = serverUrl+"/competences/coursecontext?course="+this.session.get('up.session.courseId');
+              }
+              else {
+                var url = new URI(serverUrl + "/competences/coursecontext/selected/{course}");
+                url.segment(this.session.get('up.session.courseId'))
+        				  .segment("all")
+                  .segment("nocache");
+              }
+              break;
+            case "mycompetencepaths":
+              if (localHandling) {
+                serverUrl = serverUrl+"/competences/coursecontext?course="+this.session.get('up.session.courseId');
+              }
+              else {
+                var url = new URI(serverUrl + "/competences/coursecontext/selected/{course}");
+                url.segment(this.session.get('up.session.courseId'))
+        				  .segment("all")
+                  .segment("nocache");
+              }
+              break;
+            default:
+              break;
+          }
+          console.log(serverUrl);
+          return serverUrl;
+          
+      },
+      parse: function(data) {
+        var parsedData = JSON.parse(data);
+        return parsedData.competences;
+      }
+  });
 
-			this.parent = options.parent;
-			this.listenTo(this.collection, "sync", this.render);
-			this.listenTo(this.collection, "error", this.errorHappened);
-		},
+  var CompetencesListView = Backbone.View.extend({
+      initialize: function () {
+          this.template = utils.rendertmpl("competence.list");
+          this.listenTo(this.collection, "sync error", this.render);
+          this.collection.fetch();
+      },
+      render: function () {
+          this.$el.empty();
+          this.$el.append(this.template({competences: this.collection}));
+          this.$el.trigger("create");
+      }
+  });
 
-		errorHappened: function(a, b, c, d, e) {
-		},
+  var CompetenceOverviewPageView = Backbone.View.extend({
+      attributes: {"id": "competenceOverview"},
+      events : {'submit': 'newCompetence'},
+      initialize: function (options) {
+          this.session = new Session();
+          this.template = utils.rendertmpl("competence.overview");
+          this.session.set("up.session.compcontext", options.page);
+      },
+      
+      render: function () {
+          this.$el.html(this.template({}));
+          this.$el.trigger("create");
 
-		render: function() {
-			var competences = this.collection.filter(function(c) { return c.get("parent") == this.parent}, this);
+          new CompetencesListView({el: this.$("#competenceList"), collection: new SelectableCompetences()});
 
-			this.$el.html(this.template({competences: new Backbone.Collection(competences)}));
-			this.$el.trigger("create");
-			return this;
-		}
-	});
+          return this;
+      },
+      newCompetence: function (event) {
+        event.preventDefault();
+        console.log("new competence");
+      }
+  });
 
-	var CompetenceView = Backbone.View.extend({
+  return CompetenceOverviewPageView;  
 
-		events: {
-			"submit": "submitCompetence"
-		},
-
-		initialize: function(options) {
-			this.template = utils.rendertmpl("competence.item");
-			this.page = options.page;
-
-			_.bindAll(this, "render");
-
-			this.listenTo(this.collection, "request", this.render);
-			this.listenTo(this.collection, "sync", this.render);
-		},
-
-		submitCompetence: function(ev) {
-			ev.preventDefault();
-
-			var comment = this.$("#comment").val();
-			var model = this.collection.find(function(competence) { return competence.get("name") === this.page}, this);
-			if (comment == undefined || comment == "") {
-				comment = "Ohne Kommentar"
-			}
-			model.set("comment", comment);
-			model.save({
-				success: _.bind(function() { this.collection.fetch(); }, this),
-				error: function() { alert("Es ist ein Fehler aufgetreten."); }
-			});
-		},
-
-		render: function() {
-			var model = this.collection.find(function(competence) { return competence.get("name") === this.page}, this);
-			this.$el.empty();
-			if (model) {
-				this.$el.append(this.template({competence: model}));
-				new CompetenceListView({el: this.$(".subcompetences"), collection: this.collection, parent: model.get("name")}).render();
-			} else {
-				this.$el.append("<div>Wir warten noch auf Daten</div>");
-			}
-			this.$el.trigger("create");
-
-			return this;
-		}
-	});
-
-	var CompetenceOverviewPageView = Backbone.View.extend({
-
-		attributes: {"id": "competenceOverview"},
-
-		initialize: function(options) {
-			this.template = utils.rendertmpl("competence.overview");
-			this.page = options.page;
-
-			this.collection = this._createCollection();
-                        this.listenToOnce(this, "rendered", this.prepareData);
-		},
-                
-                prepareData: function() {
-                    new utils.LoadingView({collection: this.collection, el: this.$("#loadingSpinner")});
-                    this.collection.fetch();
-                },
-
-		_createCollection: function() {
-			var session = new Session();
-			var username = session.get('up.session.username');
-			var context = new Models.Context({username: username});
-			return context.get("competences");
-		},
-
-		render: function() {
-			this.$el.html(this.template({}));
-			this.$el.trigger("create");
-                        
-			if (this.page) {
-				var headerLink = this.$(".menubutton");
-				headerLink.addClass("back");
-				headerLink.removeClass("menubutton");
-				headerLink.attr("href", "#competences");
-				headerLink.attr("data-direction", "reverse");
-
-				new CompetenceView({el: this.$("#competenceList"), collection: this.collection, page: this.page}).render();
-			} else {
-				new CompetenceListView({el: this.$("#competenceList"), collection: this.collection}).render();
-			}
-                        
-                        this.trigger("rendered");
-			return this;
-		}
-	});
-
-	return {
-		CompetenceOverviewPageView: CompetenceOverviewPageView
-	};
+;
 });

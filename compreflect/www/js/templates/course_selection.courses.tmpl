@@ -1,13 +1,10 @@
-
-
-
 <%  if(store.get('up.session.authenticated')){ %>
 	 
 <div style="background: #B0B0B0;">
     <ul data-role="listview" data-inset="true" data-theme="b" class="ui-listview ui-listview-inset ui-corner-all ui-shadow ui-group-theme-b">
         <% courses.each(function(course) { %>        
         <li>           
-            <a href="#courseSelection/<%= course.attributes.name %>/<%= course.attributes.courseid %>" class="ui-btn ui-icon-carat-r"><%= course.attributes.name %></a>    
+            <a href="#courseSelection/<%= course.attributes.title %>/<%= course.attributes.id %>" class="ui-btn ui-icon-carat-r"><%= course.attributes.title %></a>    
         </li>
         
         <% }); %>
@@ -18,25 +15,5 @@
     <%  } 
 
 else { %> 
-    <h1>Not logged in... </h1>   
+    <h1>Nicht eingeloggt</h1>   
 <% } %>
-
-
-<!--
-
-<ul data-role="listview" data-inset="true" data-theme="b" class="ui-listview ui-listview-inset ui-corner-all ui-shadow ui-group-theme-b">
-
-<li class="ui-first-child">
-<a href="#competences/Java%201" class="ui-btn ui-btn-icon-right ui-icon-carat-r">Java 1</a>
-</li>
-
-<li>
-<a href="#competences/Java%202" class="ui-btn ui-btn-icon-right ui-icon-carat-r">Java 2</a>
-</li>
-
-<li class="ui-last-child">
-<a href="#competences/Java%203" class="ui-btn ui-btn-icon-right ui-icon-carat-r">Java 3</a>
-</li>
-
-</ul>
--->
