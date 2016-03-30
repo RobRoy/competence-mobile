@@ -22,23 +22,25 @@ define([
 
             var serverUrl = "http://localhost:8084";
             var useLocalServer = true;
-            var localHandling = true; // switch this to enable legacy mode (old code) or when the backend is production ready
+            var localHandling = false; // switch this to enable legacy mode (old code) or when the backend is production ready
 
             if (!window.cordova && useLocalServer) {
               if (localHandling) {
-                serverUrl = "http://competenceserver.dev";
+                serverUrl = "http://competenceserver.dev/lms/courses/moodle?organization=irgendwas&username="+ username +"&password=" + password;
               }
               else {
-                serverUrl = "http://localhost:8084";
+                serverUrl = "http://localhost:8084/lms/courses/moodle/"+ username +"/?organization=irgendwas&username=&password=" + password;
               }
             }
             
-            return serverUrl+"/lms/courses/moodle?organization=irgendwas&username="+ username +"@uni-potsdam.de&password=" + password;
+            return serverUrl;
             
         },
         parse: function(data) {
-          var parsedData = JSON.parse(data);
-          return parsedData.courses;
+            console.log(data);
+
+          //var parsedData = JSON.parse(data);
+          return data;
         }
     });
 

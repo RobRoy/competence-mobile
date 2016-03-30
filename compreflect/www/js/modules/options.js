@@ -24,6 +24,9 @@ define([
 		},
 
 		initialize: function(){
+
+			this.model.unset('up.session.loginFailureTime');
+
 			this.loginAttempts = 0;
 			this.loginCountdown = 0;
 			this.logintemplate = utils.rendertmpl('login');
@@ -86,17 +89,14 @@ define([
 					this.model.fetch({
 						success: function(model, response, options){
 							var responseBody = JSON.parse(response);
-              console.log(responseBody);
-							if(responseBody['success'] == false){
+							if(responseBody == false){
 								console.log("Not authenticated.");
 								that.trigger("errorHandler");
 							}
-							else if (responseBody['success'] == true) {
+							else if (responseBody == true) {
 								that.model.set('up.session.authenticated', true);
 								that.model.set('up.session.username', username);
 								that.model.set('up.session.password', password);
-                that.model.set('up.session.MoodleToken', responseBody['token']);
-                that.model.set('up.session.name', responseBody['name']);
 								that.model.unset('up.session.loginFailureTime');
 
 								var path = '';

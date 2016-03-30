@@ -22,7 +22,7 @@ define([
           
           // Debug & Dev Switches
           var useLocalServer = true;
-          var localHandling = true; // switch this to enable legacy mode (old code) or when the backend is production ready
+          var localHandling = false; // switch this to enable legacy mode (old code) or when the backend is production ready
 
           if (!window.cordova && useLocalServer) {
             if (localHandling) {
@@ -39,10 +39,7 @@ define([
                 serverUrl = serverUrl+"/competences/coursecontext?course="+this.session.get('up.session.courseId');
               }
               else {
-                var url = new URI(serverUrl + "/competences/coursecontext/selected/{course}");
-                url.segment(this.session.get('up.session.courseId'))
-        				  .segment("all")
-                  .segment("nocache");
+                  serverUrl = serverUrl+"/competences/SuggestedCompetencesForCourse/"+this.session.get('up.session.courseId')+"/";
               }
               break;
             case "mycompetences":
@@ -75,8 +72,9 @@ define([
           
       },
       parse: function(data) {
-        var parsedData = JSON.parse(data);
-        return parsedData.competences;
+        var data = ["foo", "bar"];
+        console.log(JSON.stringify(data));
+        return JSON.stringify(data);
       }
   });
 
@@ -110,9 +108,74 @@ define([
 
           return this;
       },
+      connectCompetenceWithCourse: function (competenceString, courseId) {
+
+          var serverUrl = "http://localhost:8084";
+          var courseCompetenceUrl = serverUrl + "/competences/SuggestedCourseForCompetence/create/";
+
+          courseCompetenceUrl = courseCompetenceUrl + "?competence="+competenceString;
+          courseCompetenceUrl = courseCompetenceUrl + "&course="+courseId;
+
+          $.ajax({
+              url: courseCompetenceUrl,
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Accept':'application/json'
+              },
+              type: "POST",
+              dataType: "text",
+              success: function(response){
+                  console.log("Success: "+response);
+              },
+              error: function(response) {
+                  console.log("Error: "+response);
+              }
+          });
+
+      },
+
+
       newCompetence: function (event) {
         event.preventDefault();
+        that = this;
+        var courseId = this.session.get('up.session.courseId');
         console.log("new competence");
+        var serverUrl = "http://localhost:8084";
+        var addCompetenceURL = serverUrl + "/competences/addOne/";
+
+        var newCompetence = $("#newcompetence").val();
+        var catchWords = $("#competencetags").val().split(",");
+        var operator = "operieren";
+        var templateName = this.session.get('up.session.username');
+
+        addCompetenceURL = addCompetenceURL + "?competence="+newCompetence;
+        addCompetenceURL = addCompetenceURL + "&operator="+operator;
+        addCompetenceURL = addCompetenceURL + "&learningTemplateName="+templateName;
+        $(catchWords).each(function(index){
+            addCompetenceURL = addCompetenceURL + "&catchwords="+this;
+        });
+        addCompetenceURL = addCompetenceURL + "&catchwords=studentenkompetenz";
+        addCompetenceURL = addCompetenceURL + "&operator="+operator;
+
+          $.ajax({
+              url: addCompetenceURL,
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Accept':'application/json'
+              },
+              type: "POST",
+              dataType: "text",
+              success: function(response){
+                  that.connectCompetenceWithCourse(newCompetence,courseId);
+              },
+              error: function(response) {
+                  console.log("Error: "+response);
+              }
+          });
+
+
+
+
       }
   });
 

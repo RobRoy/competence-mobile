@@ -30,7 +30,7 @@ define([
 				
 				
 				devServer: true,
-        localHandling: true, // switch this to enable legacy mode (old code) or when the backend is production ready
+        localHandling: false, // switch this to enable legacy mode (old code) or when the backend is production ready
 			// TODO: this should point to an installation of the competence-database later on; not a moodle endpoint
         suburl: 'https://api.uni-potsdam.de/endpoints/moodleAPI/login/token.php',
 

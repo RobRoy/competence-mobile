@@ -4,7 +4,7 @@
     <ul data-role="listview" data-inset="true" data-theme="b" class="ui-listview ui-listview-inset ui-corner-all ui-shadow ui-group-theme-b">
         <% courses.each(function(course) { %>        
         <li>           
-            <a href="#courseSelection/<%= course.attributes.title %>/<%= course.attributes.id %>" class="ui-btn ui-icon-carat-r"><%= course.attributes.title %></a>    
+            <a href="#courseSelection/<%= course.attributes.name %>/<%= course.attributes.courseid %>" class="ui-btn ui-icon-carat-r"><%= course.attributes.name %></a>
         </li>
         
         <% }); %>
