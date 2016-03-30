@@ -1,29 +1,27 @@
 {
-	"title": "login",
-	"$schema": "http://json-schema.org/draft-04/schema#",
-
-	"type": "object",
+  "title": "login",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
   "description": "a user object after login",
-
-	"properties": {
-		"success": {
+  "properties": {
+    "success": {
       "description": "boolean value determining the auth success - if this is false, ignore everything else",
-			"type": "boolean"
-		},
-		"email": {
+      "type": "boolean"
+    },
+    "email": {
       "description": "the user's email - could be rechecked in the app",
-			"type": "string",
+      "type": "string",
       "format": "email"
-		},
-		"name": {
+    },
+    "name": {
       "description": "the user's name",
-			"type": "string",
+      "type": "string",
       "ipsum": "name"
-		},
-		"token": {
+    },
+    "token": {
       "description": "the Moodle API token for further requests against the Moodle API",
-			"type": "string",
+      "type": "string",
       "ipsum": "id"
-		}
-	}
+    }
+  }
 }

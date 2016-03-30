@@ -11,21 +11,14 @@
  * in the JSON schemas. All the "ipsum" fields in the properties can be ignored when building
  * the API endpoints.
  *
- *
- *
- *
- *
- *
- *
  * @author Robert Schmidl
- * @version 0.4
+ * @version 0.9
  */
-
-
 
 /**
  * Enable some headers to satisfy dev functionality
  */
+
 // enable cors requests
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
@@ -51,6 +44,21 @@ switch ($route) {
     break;
   case 'lms/courses/moodle':
     echo json_encode(getFakeData("courselist.json"));
+    break;
+  case 'competences/coursecontext':
+    echo json_encode(getFakeData("competences_for_course.json"));
+    break;
+  case 'competence':
+    echo json_encode(getFakeData("competence.json"));
+    break;
+  case 'competence/user':
+    echo json_encode(getFakeData("competence_user.json"));
+    break;
+  case 'competence/suggestions':
+    echo json_encode(getFakeData("competence_suggestions.json"));
+    break;
+  case 'competences/user':
+    echo json_encode(getFakeData("competences_for_user.json"));
     break;
   default:
     echo json_encode(getFakeData("nothing.json"));

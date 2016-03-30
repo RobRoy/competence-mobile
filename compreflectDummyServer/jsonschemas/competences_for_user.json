@@ -1,22 +1,22 @@
 {
-  "title": "courselist",
+  "title": "comptenceslist",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
-  "description": "the course list of a given user",
+  "description": "the list of competences for a single course",
   "properties": {
-    "courses": {
-      "description": "the course list",
+    "competences": {
+      "description": "the comptences list",
       "type": "array",
       "items": {
-        "description": "object representing a single course",
+        "description": "object representing a single competence",
         "type": "object",
         "properties": {
           "id": {
-            "description": "the course id",
+            "description": "the competence id",
             "type": "integer"
           },
           "title": {
-            "description": "the title of the course",
+            "description": "the string representation of a competence",
             "type": "string",
             "ipsum": "title"
           }

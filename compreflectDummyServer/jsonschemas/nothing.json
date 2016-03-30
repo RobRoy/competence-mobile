@@ -1,12 +1,10 @@
 {
-	"title": "just a string",
-	"$schema": "http://json-schema.org/draft-04/schema#",
-
-	"type": "object",
-
-	"properties": {
-		"nothing": {
-			"type": "string"
-		}
-	}
+  "title": "just a string",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "nothing": {
+      "type": "string"
+    }
+  }
 }

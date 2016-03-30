@@ -1,0 +1,21 @@
+{
+  "title": "competence_user",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "has a user earned a competence",
+  "properties": {
+    "id": {
+      "description": "the competence id",
+      "type": "integer"
+    },
+    "email": {
+      "description": "the user's email - could be rechecked in the app",
+      "type": "string",
+      "format": "email"
+    },
+    "earned": {
+      "description": "boolean value determining whether the given user has earned the given competence",
+      "type": "boolean"
+    }
+  }
+}

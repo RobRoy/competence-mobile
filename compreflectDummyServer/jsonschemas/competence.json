@@ -1,0 +1,38 @@
+{
+  "title": "competence",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "a single competence",
+  "properties": {
+    "id": {
+      "description": "the competence id",
+      "type": "integer"
+    },
+    "title": {
+      "description": "the competence title",
+      "type": "string",
+      "ipsum": "name"
+    },
+    "description": {
+      "description": "the description of the competence",
+      "type": "string"
+    },
+    "catchwords": {
+      "description": "the catchwords for this competence",
+      "type": "array",
+      "items": {
+        "description": "object representing a single catchword",
+        "type": "object",
+        "properties": {
+          "catchword": {
+            "description": "one catchword",
+            "type": "string",
+            "ipsum": "title"
+          }
+        },
+      "minItems": 0,
+      "uniqueItems": true
+      }
+    }
+  }
+}
