@@ -32,12 +32,12 @@ define([
 		url: 'http://competenceserver.dev',
 		initialize: function(options){
       var options = options || {};
+      this.session = new Session();
       this.url = this.url + "/competence?id="+options.id+"&title="+options.competence;
-      this.completed = _
+      this.completed = this._getCompletion(options);
 		},
     parse: function(data){
       var parsedData = JSON.parse(data);
-      console.log(parsedData);
       return parsedData;
     },
 
@@ -45,6 +45,21 @@ define([
       var options = options || {};
       console.log(options.test);
       return true;
+    },
+    
+    _getCompletion: function(options) {
+      var completed = false;
+      var completionURL = "http://competenceserver.dev/competence/user?id="+options.id+"&user="+this.session.get('up.session.username')+"@uni-potsdam.de";
+			$.ajax({
+				url: completionURL,
+				type: "GET",
+				dataType: "json",
+        success: function(data) {
+          console.log(data);
+          var parsedData = JSON.parse(data);
+        }
+			});
+      return completed;
     }
 	});
   

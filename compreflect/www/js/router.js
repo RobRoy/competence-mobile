@@ -147,7 +147,7 @@ define([
             var session = new Session();
             session.set("up.session.competenceId", competenceId);
             session.set("up.session.competenceName", competenceName);
-            this.changePage(new CompetenceView({competence: competenceName}));
+            this.changePage(new CompetenceView({competence: competenceName, id:competenceId}));
         },        
         courseSelection: function (courseName, courseId) {            
             if (!(courseName === null)) {       
