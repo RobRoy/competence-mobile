@@ -46,7 +46,8 @@ switch ($route) {
     echo json_encode(getFakeData("courselist.json"));
     break;
   case 'competences/coursecontext':
-    echo json_encode(getFakeData("competences_for_course.json"));
+    //echo json_encode(getFakeData("competences_for_course.json"));
+    echo json_encode('[{"name":"Kompetenz","icon":"http://127.0.0.1:8888/icons/competence.png","isCompulsory":false,"treetipp":"","competence":[{"name":"java1","icon":"http://127.0.0.1:8888/icons/competence.png","isCompulsory":false,"treetipp":"","competence":[]},{"name":"java2","icon":"http://127.0.0.1:8888/icons/competence.png","isCompulsory":false,"treetipp":"","competence":[]},{"name":"r1","icon":"http://127.0.0.1:8888/icons/competence.png","isCompulsory":false,"treetipp":"","competence":[]},{"name":"r2","icon":"http://127.0.0.1:8888/icons/competence.png","isCompulsory":false,"treetipp":"","competence":[]},{"name":"r3","icon":"http://127.0.0.1:8888/icons/competence.png","isCompulsory":false,"treetipp":"","competence":[]},{"name":"t1","icon":"http://127.0.0.1:8888/icons/competence.png","isCompulsory":false,"treetipp":"","competence":[]},{"name":"t2","icon":"http://127.0.0.1:8888/icons/competence.png","isCompulsory":false,"treetipp":"","competence":[]},{"name":"t3","icon":"http://127.0.0.1:8888/icons/competence.png","isCompulsory":false,"treetipp":"","competence":[]},{"name":"testkompetenz","icon":"http://127.0.0.1:8888/icons/competence.png","isCompulsory":false,"treetipp":"","competence":[]},{"name":"testkompetenz?course=2","icon":"http://127.0.0.1:8888/icons/competence.png","isCompulsory":false,"treetipp":"","competence":[]}]}]');
     break;
   case 'competence':
     echo json_encode(getFakeData("competence.json"));
