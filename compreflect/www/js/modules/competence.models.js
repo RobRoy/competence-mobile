@@ -21,7 +21,7 @@ define([
       serverUrl = "http://competenceserver.dev";
     }
     else {
-      serverUrl = "http://localhost:8084/competences";
+      serverUrl = "http://172.20.10.10:8084/competences";
     }
 	}
 

@@ -24,7 +24,7 @@ define([
       serverUrl = "http://competenceserver.dev";
     }
     else {
-      serverUrl = "http://localhost:8084/competences";
+      serverUrl = "http://172.20.10.10:8084/competences";
     }
 	}
   
@@ -62,6 +62,42 @@ define([
       return completed;
     }
 	});
+	
+	var UserCompetences = Backbone.Collection.extend({
+    url: function () {
+
+        this.session = new Session();		
+        var user = this.session.get('up.session.username');
+        
+        var serverUrl = "http://172.20.10.10:8084";  // this needs to be a URL to a production server once done
+        
+        // Debug & Dev Switches
+        var useLocalServer = true;
+        var localHandling = false; // switch this to enable legacy mode (old code) or when the backend is production ready
+
+        if (!window.cordova && useLocalServer) {
+          if (localHandling) {
+            serverUrl = "http://competenceserver.dev";
+          }
+          else {
+            serverUrl = "http://172.20.10.10:8084";
+          }
+        }
+        
+        if (localHandling) {
+          serverUrl = serverUrl+"/competences/link/overview/?user="+user;
+        }
+        else {
+					serverUrl = serverUrl+"/competences/link/overview/"+user+"/";
+				}
+        
+        return serverUrl;
+        
+    },
+		
+		
+		
+	});
   
   
   var CompetenceTree = Backbone.Collection.extend({
@@ -70,18 +106,18 @@ define([
           this.session = new Session();		
           var compcontext = this.session.get('up.session.competenceName');
           
-          var serverUrl = "http://localhost:8084";  // this needs to be a URL to a production server once done
+          var serverUrl = "http://172.20.10.10:8084";  // this needs to be a URL to a production server once done
           
           // Debug & Dev Switches
           var useLocalServer = true;
-          var localHandling = true; // switch this to enable legacy mode (old code) or when the backend is production ready
+          var localHandling = false; // switch this to enable legacy mode (old code) or when the backend is production ready
 
           if (!window.cordova && useLocalServer) {
             if (localHandling) {
               serverUrl = "http://competenceserver.dev";
             }
             else {
-              serverUrl = "http://localhost:8084";
+              serverUrl = "http://172.20.10.10:8084";
             }
           }
           
@@ -89,18 +125,33 @@ define([
             serverUrl = serverUrl+"/competences/coursecontext?course="+this.session.get('up.session.courseId');
           }
           else {
-            var url = new URI(serverUrl + "/competences/coursecontext/selected/{course}");
-            url.segment(this.session.get('up.session.courseId'))
-    				  .segment("all")
-              .segment("nocache");
-          }
+						serverUrl = serverUrl+"/competences/competencetree/"+this.session.get('up.session.courseId')+"/";
+					}
           
           return serverUrl;
           
       },
+			
       parse: function(data) {
-        var parsedData = JSON.parse(data);
-        return parsedData.competences;
+				var context = this.session.get("up.session.compcontext");
+				var currentCompetence = this.session.get('up.session.competenceName');
+				
+				if (context == "compview") {
+					var parsedCompetences = data[0].competence;
+					// _.each(competenceTree,function(competence) {
+					// 	if (competence.name == currentCompetence) {
+					// 		var parsedCompetences = competence[0];
+					// 	}
+					// });
+				}
+				else if (context == "suggestions") {
+					var parsedCompetences = data[0];
+				}
+				else {
+					var parsedCompetences = data;
+					console.log("Error. Unkown context.");
+				}
+        return parsedCompetences;
       }
   });
   
@@ -127,21 +178,14 @@ define([
         this.session.set("up.session.compcontext", "compview");
         this.template = utils.rendertmpl("competence.view");
         _.bindAll(this, 'render');
-  			this.model = new app.models.Competence(options);
-        this.model.fetch(utils.cacheDefaults({
-          success: this.render,
-          error: function(event){
-            console.log(event);
-          },
-          dataType: 'json'
-        }));
+
     },
     
     render: function () {
       this.$el.html(this.template({competence: this.model}));
       this.$el.trigger("create");
       this.$el.trigger("circle");      
-      
+
       new CompetencesListView({el: this.$("#competenceTree"), collection: new CompetenceTree()});
       
       this.$("#compcircle").circliful({

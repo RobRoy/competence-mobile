@@ -79,7 +79,7 @@ define([
               this.url = "http://competenceserver.dev/lms/user/exists";
             }
             else {
-              this.url = 'http://localhost:8084/lms/user/exists';              
+              this.url = 'http://172.20.10.10:8084/lms/user/exists';              
             }
 					}
           // prepare Moodle Token URL

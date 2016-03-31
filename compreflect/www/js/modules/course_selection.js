@@ -20,7 +20,7 @@ define([
             var password = this.session.get('up.session.password');
 
 
-            var serverUrl = "http://localhost:8084";
+            var serverUrl = "http://172.20.10.10:8084";
             var useLocalServer = true;
             var localHandling = false; // switch this to enable legacy mode (old code) or when the backend is production ready
 
@@ -29,7 +29,7 @@ define([
                 serverUrl = "http://competenceserver.dev/lms/courses/moodle?organization=irgendwas&username="+ username +"&password=" + password;
               }
               else {
-                serverUrl = "http://localhost:8084/lms/courses/moodle/"+ username +"/?organization=irgendwas&username=&password=" + password;
+                serverUrl = "http://172.20.10.10:8084/lms/courses/moodle/"+ username +"/?organization=irgendwas&username=&password=" + password;
               }
             }
             

@@ -15,13 +15,13 @@
 
 <div id="competence" data-role="content" data-theme="c">
 	<div class="flex-container">
-    <h2 id="competenceTitle"><%= store.get('up.session.competenceName') %> (Fortschritt)</h2>
+    <div class="competence-panel">
+      <p style="font-weight: bold; padding: 5px;"><%= store.get('up.session.competenceName') %></p>
+    </div>
+    <h2 id="competenceTitle">Fortschritt</h2>
     <div class="percentageMeter" style="max-width:50%; margin-left:auto;margin-right:auto;"> ​
       <div id="compcircle"></div>​
     ​</div>​
-    <p style="margin-bottom:2%;padding:10px;">
-      <%= competence.attributes.description %>
-    </p>
     <h2>Zugehörige Kompetenzen</h2>
     <div id="competenceTree"></div>
 	</div>

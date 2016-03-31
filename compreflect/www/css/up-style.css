@@ -2154,6 +2154,13 @@ p.event-description {
 	color:#fff !important;
 }
 
+.competence-panel {
+  background-color: #ededed;
+  margin: 15px;
+  min-height: 70px;
+  padding: 2px;
+}
+
 /*** images high resoluton devices ***/
 @media only screen and (-webkit-min-device-pixel-ratio: 2) , only screen and (
 		min--moz-device-pixel-ratio: 2) , only screen and (

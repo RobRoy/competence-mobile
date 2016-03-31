@@ -4,9 +4,9 @@
   		<%= store.get('up.session.courseName') %>
   	</li>
   <% } %>
-  <% _.each(competences, function(competence) { %>
+  <% competences.each(function(competence, index) { %>
   	<li>
-  		<a href="#competences/<% print(encodeURIComponent(this)); %>/<% print(encodeURIComponent(this)); %>"><%= competences[competence] %></a>
+  		<a href="#competences/<% print(encodeURIComponent(competence.attributes.name)); %>"><%= competence.attributes.name %></a>
   	</li>
   <% }) %>
 </ul>

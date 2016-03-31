@@ -18,7 +18,7 @@ define([
           this.session = new Session();		
           var compcontext = this.session.get('up.session.compcontext');
           
-          var serverUrl = "http://localhost:8084";  // this needs to be a URL to a production server once done
+          var serverUrl = "http://172.20.10.10:8084";  // this needs to be a URL to a production server once done
           
           // Debug & Dev Switches
           var useLocalServer = true;
@@ -29,7 +29,7 @@ define([
               serverUrl = "http://competenceserver.dev";
             }
             else {
-              serverUrl = "http://localhost:8084";
+              serverUrl = "http://172.20.10.10:8084";
             }
           }
           console.log(compcontext);
@@ -71,10 +71,11 @@ define([
           return serverUrl;
           
       },
-      parse: function(data) {
-        var data = ["foo", "bar"];
-        console.log(JSON.stringify(data));
-        return JSON.stringify(data);
+			parse: function (competences) {
+        var parsedCompetence = _.map(competences, function (n) {
+          return {name: n};
+        });
+        return parsedCompetence;
       }
   });
 
@@ -110,7 +111,7 @@ define([
       },
       connectCompetenceWithCourse: function (competenceString, courseId) {
 
-          var serverUrl = "http://localhost:8084";
+          var serverUrl = "http://172.20.10.10:8084";
           var courseCompetenceUrl = serverUrl + "/competences/SuggestedCourseForCompetence/create/";
 
           courseCompetenceUrl = courseCompetenceUrl + "?competence="+competenceString;
@@ -140,7 +141,7 @@ define([
         that = this;
         var courseId = this.session.get('up.session.courseId');
         console.log("new competence");
-        var serverUrl = "http://localhost:8084";
+        var serverUrl = "http://172.20.10.10:8084";
         var addCompetenceURL = serverUrl + "/competences/addOne/";
 
         var newCompetence = $("#newcompetence").val();

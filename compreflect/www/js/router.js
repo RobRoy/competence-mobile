@@ -63,7 +63,7 @@ define([
             "options": "options",
             "people": "people",
             "competences": "competences",
-            "competences/:competenceName/:competenceId": "competences",
+            "competences/:competenceName": "competences",
             "courseSelection": "courseSelection",
             "courseSelection/:courseName/:courseId": "courseSelection",
             "myCompetences": "myCompetences",
@@ -145,9 +145,8 @@ define([
         },
         competences: function (competenceName, competenceId) {
             var session = new Session();
-            session.set("up.session.competenceId", competenceId);
             session.set("up.session.competenceName", competenceName);
-            this.changePage(new CompetenceView({competence: competenceName, id:competenceId}));
+            this.changePage(new CompetenceView({competence: competenceName}));
         },        
         courseSelection: function (courseName, courseId) {            
             if (!(courseName === null)) {       
