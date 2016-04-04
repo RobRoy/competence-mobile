@@ -1,0 +1,11 @@
+<ul id="competencelist"  data-role="listview" data-inset="true">
+  <li class="courseHeadline" style="background: #014260; min-height: 2em; color: #fff; text-align: center; font-family: georgia,serif; font-style: italic; letter-spacing: 1px; margin-bottom: 5px; padding-top: 10px;">
+		<%= store.get('up.session.courseName') %>
+	</li>
+
+  <% competences.each(function(competence, index) { %>
+  	<li>
+  		<a href="#competences/<% print(encodeURIComponent(competence.attributes.name)); %>"><%= competence.attributes.name %></a>
+  	</li>
+  <% }) %>
+</ul>

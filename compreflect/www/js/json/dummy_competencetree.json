@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Kompetenz",
+    "icon": "http://127.0.0.1:8888/icons/competence.png",
+    "isCompulsory": false,
+    "treetipp": "",
+    "competence": [
+      {
+        "name": "Testkompetenz 1",
+        "icon": "http://127.0.0.1:8888/icons/competence.png",
+        "isCompulsory": false,
+        "treetipp": "",
+        "competence": [
+          {
+            "name": "Testkompetenz 2",
+            "icon": "http://127.0.0.1:8888/icons/competence.png",
+            "isCompulsory": false,
+            "treetipp": "",
+            "competence": [
+
+            ]
+          },
+          {
+            "name": "Testkompetenz 3",
+            "icon": "http://127.0.0.1:8888/icons/competence.png",
+            "isCompulsory": false,
+            "treetipp": "",
+            "competence": [
+
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
+

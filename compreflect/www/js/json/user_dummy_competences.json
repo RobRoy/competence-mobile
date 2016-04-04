@@ -1,0 +1,69 @@
+{
+  "mapUserCompetenceLinks": {
+    "Testkompetenz 1": {
+      "comments": [
+        {
+          "userName": "student",
+          "commentName": "Testkommentar",
+          "created": 1459554793625
+        }
+      ],
+      "evidenceTitel": "app",
+      "evidenceUrl": "app",
+      "abstractLinkId": "Testkompetenz.von student",
+      "validated": true
+    },
+    "Testkompetenz 17": {
+      "comments": [
+        {
+          "userName": "student",
+          "commentName": "Testkommentar",
+          "created": 1459554793625
+        }
+      ],
+      "evidenceTitel": "app",
+      "evidenceUrl": "app",
+      "abstractLinkId": "Testkompetenz.von student",
+      "validated": true
+    },
+    "Testkompetenz 3": {
+      "comments": [
+        {
+          "userName": "student",
+          "commentName": "Testkommentar",
+          "created": 1459554793625
+        }
+      ],
+      "evidenceTitel": "app",
+      "evidenceUrl": "app",
+      "abstractLinkId": "Testkompetenz.von student",
+      "validated": true
+    },
+    "Testkompetenz 4": {
+      "comments": [
+        {
+          "userName": "student",
+          "commentName": "Testkommentar",
+          "created": 1459554793625
+        }
+      ],
+      "evidenceTitel": "app",
+      "evidenceUrl": "app",
+      "abstractLinkId": "Testkompetenz.von student",
+      "validated": true
+    },
+    "Testkompetenz 5": {
+      "comments": [
+        {
+          "userName": "student",
+          "commentName": "Testkommentar",
+          "created": 1459554793625
+        }
+      ],
+      "evidenceTitel": "app",
+      "evidenceUrl": "app",
+      "abstractLinkId": "Testkompetenz.von student",
+      "validated": true
+    }
+  }
+}

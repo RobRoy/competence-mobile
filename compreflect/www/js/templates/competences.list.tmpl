@@ -1,0 +1,7 @@
+<ul id="competencelist"  data-role="listview" data-inset="true">
+  <% competences.each(function(competence, index) { %>
+  	<li>
+  		<a href="#competences/<% print(encodeURIComponent(competence.attributes.name)); %>"><%= competence.attributes.name %></a>
+  	</li>
+  <% }) %>
+</ul>

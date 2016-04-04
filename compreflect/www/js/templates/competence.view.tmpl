@@ -18,10 +18,25 @@
     <div class="competence-panel">
       <p style="font-weight: bold; padding: 5px;"><%= store.get('up.session.competenceName') %></p>
     </div>
-    <h2 id="competenceTitle">Fortschritt</h2>
-    <div class="percentageMeter" style="max-width:50%; margin-left:auto;margin-right:auto;"> ​
-      <div id="compcircle"></div>​
-    ​</div>​
+    <% if (store.get('up.session.compcontext') == "coursecompetences") { %>
+      <h2 id="competenceTitle">Fortschritt</h2>
+      <div class="percentageMeter" style="max-width:50%; margin-left:auto;margin-right:auto;"> ​
+        <div id="compcircle"></div>​
+      ​</div>​
+    <% } %>
+    <% if (store.get('up.session.compcontext') == "mycompetences") { %>
+      <p>
+        Die folgenden Kompetenzen gehören zu der von Dir bereits erworbenen Kompetenz. Wähle einen
+        zugehörigen Kurs oder eine Kompetenz direkt für mehr Informationen.
+      </p>
+    <% } %>
+    <% if (store.get('up.session.compcontext') == "mycompetencepaths") { %>
+      <p>
+        Die folgenden Kompetenzen sind Vorschläge für die Weiterentwicklung Deines Studiums
+        auf Basis der ausgewählten Kompetenz. Wähle einen zugehörigen Kurs oder eine Kompetenz direkt
+        für mehr Informationen.
+      </p>
+    <% } %>
     <h2>Zugehörige Kompetenzen</h2>
     <div id="competenceTree"></div>
 	</div>
