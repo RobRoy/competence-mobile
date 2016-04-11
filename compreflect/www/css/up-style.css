@@ -2161,6 +2161,21 @@ p.event-description {
   padding: 2px;
 }
 
+.coursesublist {
+  padding-bottom: 15px;
+}
+
+.coursesublistitem {
+  line-height: 30px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.coursesublistitem a {
+  background: #cfdae3;
+}
+
+
 /*** images high resoluton devices ***/
 @media only screen and (-webkit-min-device-pixel-ratio: 2) , only screen and (
 		min--moz-device-pixel-ratio: 2) , only screen and (

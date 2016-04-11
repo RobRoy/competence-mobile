@@ -12,7 +12,28 @@ define([
   'circliful'
 ], function($, _, Backbone, utils, moment, Session, _str, Models, Circliful){
   
+
+  /**
+  * SelectableCompetences represents a collection of competences that is presented as a list
+  * to the user. It can be switched according to context - both in terms of API endpoint and
+  * parsing functionality.
+  *
+  * current contexts 
+  *
+  * coursecompetences: the competences of a course
+  * mycompetences: the approved competences of the current user
+  * mycompetencepaths: suggestions on the basis of the current user's approved competences
+  *
+  **/
+  
   var SelectableCompetences = Backbone.Collection.extend({
+    
+    /**
+    * set the url according to context
+    *
+    *
+    */
+    
       url: function () {
 
           this.session = new Session();		
@@ -35,6 +56,7 @@ define([
           }
           console.log(compcontext);
           switch (compcontext) {
+            // this should work on a competence database API as of April 2016
             case "coursecompetences":
               if (localHandling) {
                 serverUrl = serverUrl+"/competences/coursecontext?course="+this.session.get('up.session.courseId');
@@ -43,6 +65,8 @@ define([
                 serverUrl = serverUrl+"/competences/SuggestedCompetencesForCourse/"+this.session.get('up.session.courseId')+"/";
               }
               break;
+            // this endpoint ("/competences/link/overview/"+user+"/") did not work as of April 2016; the dummy JSON file linked here represents
+            // a valid response according to the API documentation of the competence database
             case "mycompetences":
               if (localHandling) {
                 serverUrl = "/js/json/user_dummy_competences.json";
@@ -53,13 +77,14 @@ define([
                 serverUrl = "/js/json/user_dummy_competences.json";
               }
               break;
+            // there was no API endpoint for suggestions as of April 2016, for the purpose of this UI development it is assumed
+            // that the response is formatted as "/competences/link/overview/"+user+"/" is
             case "mycompetencepaths":
               if (localHandling) {
                 serverUrl = "/js/json/user_dummy_competences.json";
               }
               else {
                 // for productivity switch the URLs
-                //serverUrl = serverUrl+"/competences/link/overview/"+user+"/";
                 serverUrl = "/js/json/user_dummy_competences.json";
               }
               break;
@@ -70,6 +95,15 @@ define([
           return serverUrl;
           
       },
+      
+    /**
+    * parse according to context
+    *
+    *
+    */
+      
+      
+      
 			parse: function (competences) {
         this.session = new Session();		        
         var compcontext = this.session.get('up.session.compcontext');
@@ -98,6 +132,14 @@ define([
   });
 
   var CompetencesListView = Backbone.View.extend({
+    
+    /**
+    * use a different list template according to set context
+    *
+    *
+    */
+    
+    
       initialize: function () {
         this.session = new Session();
         console.log(this.session.get("up.session.compcontext"));
@@ -142,6 +184,14 @@ define([
           return this;
       },
       
+      
+    /**
+    * the last call in the chain to create an evidence comment
+    *
+    * (this AJAX POST request should be refactored together with the competence database to set the parameters as POST parameters)
+    */
+      
+      
       createEvidenceComment: function(competenceString, courseId) {
         that = this;
         
@@ -176,6 +226,14 @@ define([
         
         
       },
+
+    /**
+    * the last call in the chain to create create a new competence for a course
+    *
+    * (this AJAX POST request should be refactored together with the competence database to set the parameters as POST parameters)
+    */
+
+
       
       createEvidenceLink: function (competenceString, courseId) {
         that = this;
@@ -208,6 +266,13 @@ define([
         
       },
       
+    /**
+    * the second call in the chain to create a new competence for a course
+    *
+    * this connects the newly created competence with the course it was created for
+    *
+    * (this AJAX POST request should be refactored together with the competence database to set the parameters as POST parameters)
+    */
 
             
       connectCompetenceWithCourse: function (competenceString, courseId) {
@@ -228,6 +293,8 @@ define([
             type: "POST",
             dataType: "text",
             success: function(response){
+              
+              // if the call was successful, make the third call (see above)
               that.createEvidenceLink(competenceString, courseId);
             },
             error: function(response) {
@@ -236,7 +303,14 @@ define([
         });
 
       },
-
+      
+    /**
+    * the first call in the chain to create a new competence for a course
+    *
+    * this sends all the parameters to the competence database REST server with some assumptions (see below)
+    *
+    * (this AJAX POST request should be refactored together with the competence database to set the parameters as POST parameters)
+    */
 
       newCompetence: function (event) {
         event.preventDefault();
@@ -246,7 +320,11 @@ define([
         
         var courseId = this.session.get('up.session.courseId');
         var newCompetence = $("#newcompetence").val();
+        
+        // split the tags on the commas into one array
         var catchWords = $("#competencetags").val().split(",");
+        
+        // default operator for competences from the app
         var operator = "operieren";
         var templateName = this.session.get('up.session.username');
         
@@ -255,9 +333,12 @@ define([
         addCompetenceURL = addCompetenceURL + "?competence="+newCompetence;
         addCompetenceURL = addCompetenceURL + "&operator="+operator;
         addCompetenceURL = addCompetenceURL + "&learningTemplateName="+templateName;
+        
+        // concatenate a string of catchwords
         $(catchWords).each(function(index){
             addCompetenceURL = addCompetenceURL + "&catchwords="+this;
         });
+        // add default catchword
         addCompetenceURL = addCompetenceURL + "&catchwords=studentenkompetenz";
         addCompetenceURL = addCompetenceURL + "&operator="+operator;
         
@@ -270,6 +351,8 @@ define([
             type: "POST",
             dataType: "text",
             success: function(response){
+              
+                // if the call was succesful, step to the second method in the chain (see above)
                 that.connectCompetenceWithCourse(newCompetence,courseId);
             },
             error: function(response) {

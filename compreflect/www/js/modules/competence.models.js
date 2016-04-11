@@ -10,6 +10,14 @@ define([
 	'cache',
 	'hammerjs'
 ], function($, _, Backbone, utils, moment, Session, _str, URI){
+  
+  
+  
+  /**
+  * This model is not used currently. The UI uses the collections in 
+  * competence.overview.js and competence.view.js
+  *
+  **/
 
 
 	var serverUrl = "http://fleckenroller.cs.uni-potsdam.de/app/competence-servlet/competence/competences";

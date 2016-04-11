@@ -1,7 +1,13 @@
 <ul id="competencelist"  data-role="listview" data-inset="true">
   <% competences.each(function(competence, index) { %>
   	<li>
-  		<a href="#competences/<% print(encodeURIComponent(competence.attributes.name)); %>"><%= competence.attributes.name %></a>
+  		<a href="#competences/<% print(encodeURIComponent(competence.attributes.name)); %>"><%= competence.attributes.name %> </a>
+      Zu erwerben in folgenden Veranstaltungen:
+      <ul data-role="listview" data-inset="true" class="coursesublist">
+      <% for (var i = 0; i < (Math.floor(Math.random() * 3) + 1); i++) { %>
+        <li class="coursesublistitem"> Vorlesung <%= i %></li>
+      <% } %>
+      </ul>
   	</li>
   <% }) %>
 </ul>
